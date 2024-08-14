@@ -39,6 +39,11 @@
             <artifactId>pi4j-plugin-gpiod</artifactId>
             <version>${pi4j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-plugin-linuxfs</artifactId>
+            <version>${pi4j.version}</version>
+        </dependency>
 
         <!-- Other -->
         <dependency>
@@ -54,6 +59,7 @@
     </dependencies>
 
     <build>
+        <defaultGoal>clean install</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
