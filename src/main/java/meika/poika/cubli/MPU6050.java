@@ -499,6 +499,8 @@ public class MPU6050 extends I2CComponent {
      */
     private double filteredAngleZ = 0.;
 
+    private long lastUpdateCompleted = 0;
+
     /* -----------------------------------------------------------------------
      *                             CONSTRUCTORS
      * -----------------------------------------------------------------------*/
@@ -700,6 +702,10 @@ public class MPU6050 extends I2CComponent {
         updatingThread = null;
     }
 
+    public boolean isUpdatingThreadStopped() {
+        return updatingThreadStopped;
+    }
+
     /**
      * Update values for the accelerometer angles, gyroscope angles and filtered angles values.
      * <p><i>This method is used with the updating thread.</i></p>
@@ -735,6 +741,10 @@ public class MPU6050 extends I2CComponent {
         filteredAngleX = alpha * (filteredAngleX + deltaGyroAngleX) + (1. - alpha) * accelAngleX;
         filteredAngleY = alpha * (filteredAngleY + deltaGyroAngleY) + (1. - alpha) * accelAngleY;
         filteredAngleZ = filteredAngleZ + deltaGyroAngleZ;
+
+//        long t = System.currentTimeMillis();
+//        System.out.println("Hz: " + (1000. / (t - lastUpdateCompleted)));
+//        lastUpdateCompleted = t;
     }
 
     /**

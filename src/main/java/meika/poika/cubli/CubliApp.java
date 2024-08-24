@@ -27,29 +27,21 @@ public class CubliApp {
         MPU6050 mpu6050 = new MPU6050();
         System.out.println("Hello, Cubli!");
         mpu6050.startUpdatingThread();
-        for (int i = 0; i < 20; i++) {
-            // Accelerometer angles
-            double[] accelAngles = mpu6050.getAccelAngles();
-
-            double[] accelAccelerations = mpu6050.getAccelAccelerations();
-
-            // Gyroscope angles
-            double[] gyroAngles = mpu6050.getGyroAngles();
-
-            double[] gyroAngularSpeeds = mpu6050.getGyroAngularSpeeds();
-
-            // Filtered angles
-            double[] filteredAngles = mpu6050.getFilteredAngles();
-
-            LOG.info("Accel angles: x={}, y={}, z={}", accelAngles[0], accelAngles[1], accelAngles[2]);
-            LOG.info("Accel accelerations: x={}, y={}, z={}", accelAccelerations[0], accelAccelerations[1], accelAccelerations[2]);
-            LOG.info("Gyro angles: x={}, y={}, z={}", gyroAngles[0], gyroAngles[1], gyroAngles[2]);
-            LOG.info("Gyro angular speeds: x={}, y={}, z={}", gyroAngularSpeeds[0], gyroAngularSpeeds[1], gyroAngularSpeeds[2]);
-            LOG.info("Filtered angles: x={}, y={}, z={}", filteredAngles[0], filteredAngles[1], filteredAngles[2]);
-
-            Thread.sleep(1000);
+        OrientationVisualization orientationVisualization = new OrientationVisualization(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                try {
+                    mpu6050.stopUpdatingThread();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        while (!mpu6050.isUpdatingThreadStopped()) {
+            orientationVisualization.updateAngles(mpu6050.getGyroAngles());
+            Thread.sleep(100);
         }
 
-//        pi4j.shutdown();
+        PI4J_CONTEXT.shutdown();
     }
 }
