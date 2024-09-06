@@ -1,16 +1,12 @@
 package meika.poika.cubli;
 import com.pi4j.Pi4J;
 import com.pi4j.context.Context;
-import com.pi4j.io.gpio.digital.DigitalOutput;
-import com.pi4j.io.gpio.digital.DigitalState;
 //import com.raspoid.additionalcomponents.MPU6050;
-import com.pi4j.io.i2c.I2C;
-import com.pi4j.io.i2c.I2CConfig;
-import com.pi4j.io.i2c.I2CProvider;
 import com.pi4j.plugin.linuxfs.provider.i2c.LinuxFsI2CProvider;
-import com.pi4j.provider.impl.DefaultProviders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
 
 public class CubliApp {
     private static final int PIN_LED = 22; // PIN 15 = BCM 22
@@ -26,6 +22,13 @@ public class CubliApp {
         System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "INFO");
         MPU6050 mpu6050 = new MPU6050();
         System.out.println("Hello, Cubli!");
+
+        JFrame f = new MotionTracking();
+
+
+
+
+        /*
         mpu6050.startUpdatingThread();
         OrientationVisualization orientationVisualization = new OrientationVisualization(new java.awt.event.WindowAdapter() {
             @Override
@@ -41,6 +44,8 @@ public class CubliApp {
             orientationVisualization.updateAngles(mpu6050.getGyroAngles());
             Thread.sleep(100);
         }
+
+         */
 
         PI4J_CONTEXT.shutdown();
     }
