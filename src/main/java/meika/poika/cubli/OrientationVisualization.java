@@ -21,6 +21,9 @@ public class OrientationVisualization extends JFrame {
 
     public void updateAngles(double[] filteredAngles) {
         this.angles = filteredAngles;
+        System.out.println(angles[0]);
+        System.out.println(angles[1]);
+        System.out.println(angles[2]);
         repaint();
     }
 
